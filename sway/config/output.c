@@ -435,6 +435,12 @@ static void queue_output_config(struct output_config *oc,
 		}
 	}
 
+	int width, height;
+	wlr_output_transformed_resolution(output->wlr_output, &width, &height);
+        sway_log(SWAY_DEBUG, "Output %p: damage_ring_dimensions: %d x %d)",
+                        &output, width, height);
+	wlr_damage_ring_set_bounds(&output->damage_ring, width, height);
+
 	if (oc && (oc->subpixel != WL_OUTPUT_SUBPIXEL_UNKNOWN || config->reloading)) {
 		sway_log(SWAY_DEBUG, "Set %s subpixel to %s", oc->name,
 			sway_wl_output_subpixel_to_string(oc->subpixel));

@@ -886,6 +886,8 @@ static void handle_mode(struct sway_output *output) {
 
 	int width, height;
 	wlr_output_transformed_resolution(output->wlr_output, &width, &height);
+	sway_log(SWAY_DEBUG, "Output %p: damage_ring_dimensions: %d x %d)",
+			&output, width, height);
 	wlr_damage_ring_set_bounds(&output->damage_ring, width, height);
 	wlr_output_schedule_frame(output->wlr_output);
 
@@ -1001,6 +1003,8 @@ void handle_new_output(struct wl_listener *listener, void *data) {
 	wlr_damage_ring_init(&output->damage_ring);
 	int width, height;
 	wlr_output_transformed_resolution(output->wlr_output, &width, &height);
+	sway_log(SWAY_DEBUG, "Output %p: damage_ring_dimensions: %d x %d)",
+			&output, width, height);
 	wlr_damage_ring_set_bounds(&output->damage_ring, width, height);
 
 	wl_signal_add(&wlr_output->events.destroy, &output->destroy);
